@@ -25,16 +25,30 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func validateTextField() {
+    func createAlert(titulo: String, mensagem: String) {
+        let alert = UIAlertController(title: titulo, message: mensagem, preferredStyle: UIAlertController.Style.alert)
+        
+        let button = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        
+        alert.addAction(button)
+        present(alert, animated: true)
+    }
+    
+    func validateTextField() -> Bool {
         if nameTextField.text != "" && emailTextField.text != "" && passwordTextField.text != "" {
             registerButton.isEnabled = true
+            return true
         } else {
             registerButton.isEnabled = false
+            return false
         }
     }
 
     @IBAction func registerButtonTapped(_ sender: UIButton) {
-        print("Funcionando")
+        
+        if validateTextField() {
+            createAlert(titulo: "Sucesso", mensagem: "Usuário registrado com sucesso!!!")
+        }
     }
     
     func keyboardConfig() {
@@ -63,7 +77,7 @@ extension ViewController: UITextViewDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         print(#function)
-        validateTextField()
+        _ = validateTextField()
         textField.layer.borderWidth = 0
     }
     
